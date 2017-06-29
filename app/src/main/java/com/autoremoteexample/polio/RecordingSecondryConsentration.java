@@ -23,6 +23,7 @@ public class RecordingSecondryConsentration extends AppCompatActivity {
 
 
     private PolioScannerData polioData;
+    private ToggleButton btn;
 //    private EditText author;
 
 
@@ -86,23 +87,49 @@ public class RecordingSecondryConsentration extends AppCompatActivity {
 
         try {
 
-            Log.d("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration():: before date::" + polioData.getConcentratedOn());
+//            Log.d("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration():: before date::" + polioData.getConcentratedOn());
             DatePicker dp4 = ((DatePicker) findViewById(R.id.concentrationDatePicker));
 
             polioData.setConcentratedOn(dp4.getDayOfMonth() + "-" + dp4.getMonth() + "-" + dp4.getYear());
-            Log.d("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration():: after date::" + polioData.getConcentratedOn());
+            Log.d("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration():: getdate::" + polioData.getConcentratedOn());
 
 
-            if(((EditText) findViewById(R.id.authorEditText)).getText() == null || ((EditText) findViewById(R.id.authorEditText)).getText().toString().equalsIgnoreCase("")){
-                throw new NullPointerException("Secondary Concentration is done By field Needs to be filled.");
+            if (((EditText) findViewById(R.id.authorEditText)).getText() == null || ((EditText) findViewById(R.id.authorEditText)).getText().toString().equalsIgnoreCase("")) {
+                throw new NullPointerException("Secondary Concentration is done By field Needs to be filled.1");
             }
             polioData.setConcentratedBy(((EditText) findViewById(R.id.authorEditText)).getText().toString());
             Log.d("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration():: audithor ::" + polioData.getConcentratedBy());
 
-            //checking if the Concentration method is null or not.
-            if(polioData.getSecConMethod() == null || polioData.getSecConMethod().equalsIgnoreCase("")){
-                throw new NullPointerException("Secondary Concentration method field Needs to be filled.");
+            //-----------------------------
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration():: before method::" + polioData.getSecConMethod());
+            if (btn == null) {
+                throw new NullPointerException("Secondary Concentration method field Needs to be filled.2");
+            } else {
+
+                if (btn.getText().toString().equalsIgnoreCase("Skimmed Milk Flocculation")) {
+
+                    polioData.setSecConMethod(Constants.LAB_CONCENTRATION_METHOD_SKIMMED_MILK);
+
+                } else if (btn.getTextOn().toString().equalsIgnoreCase("PEG/NaCI")) {
+
+                    polioData.setSecConMethod(Constants.LAB_CONCENTRATION_METHOD_PEG);
+
+                } else if (btn.getTextOn().toString().equalsIgnoreCase("other")) {
+
+                    polioData.setSecConMethod(((EditText) findViewById(R.id.methodConcentrationEditText)).getText().toString());
+
+                }
+
+
             }
+
+            //checking if the Concentration method is null or not.
+            if (polioData.getSecConMethod() == null || polioData.getSecConMethod().equalsIgnoreCase("")) {
+                throw new NullPointerException("Secondary Concentration method field Needs to be filled.3");
+            }
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration():: after method::" + polioData.getSecConMethod());
 
             Intent nextScreen = new Intent(getApplicationContext(), FinalActivityLab.class);
             nextScreen.putExtra("polioData", (Parcelable) polioData);
@@ -110,7 +137,7 @@ public class RecordingSecondryConsentration extends AppCompatActivity {
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Please fill out the required fields!", Toast.LENGTH_LONG).show();
-            Log.e("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration()::" + e.getMessage());
+            Log.e("navidi", this.getClass().getCanonicalName() + "::saveSecondaryConcentration()::3" + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -124,13 +151,14 @@ public class RecordingSecondryConsentration extends AppCompatActivity {
 
         Log.d("navidi", this.getClass().getCanonicalName() + "::ontoggle()");
 
-        ((RadioGroup) view.getParent()).check(0); // force thetoggle buttons to work exactly like radiobutton, don't toggle when doule tab on one toggle btn
+        ((RadioGroup) view.getParent()).check(0); // force the toggle buttons to work exactly like radiobutton, don't toggle when doule tab on one toggle btn
         // then set to the correct value.
         ((RadioGroup) view.getParent()).check(view.getId());
 
         //handling what needs to be done after toggling.
         RadioGroup togglegroup = ((RadioGroup) view.getParent());
-        ToggleButton btn = (ToggleButton) findViewById(togglegroup.getCheckedRadioButtonId());
+        btn = (ToggleButton) findViewById(togglegroup.getCheckedRadioButtonId());
+
 
         if (btn.getText().toString().equalsIgnoreCase("Skimmed Milk Flocculation")) {
             //skimmed milk btn, so handle that one.
@@ -138,15 +166,14 @@ public class RecordingSecondryConsentration extends AppCompatActivity {
             ((TextView) findViewById(R.id.textView5)).setVisibility(View.GONE);
             ((EditText) findViewById(R.id.methodConcentrationEditText)).setVisibility(View.GONE);
 
-            polioData.setSecConMethod(Constants.LAB_CONCENTRATION_METHOD_SKIMMED_MILK);
-
+            // polioData.setSecConMethod(Constants.LAB_CONCENTRATION_METHOD_SKIMMED_MILK);
 
         } else if (btn.getTextOn().toString().equalsIgnoreCase("PEG/NaCI")) {
 //            Toast.makeText(this, "PEG", Toast.LENGTH_LONG).show();
             ((TextView) findViewById(R.id.textView5)).setVisibility(View.GONE);
             ((EditText) findViewById(R.id.methodConcentrationEditText)).setVisibility(View.GONE);
 
-            polioData.setSecConMethod(Constants.LAB_CONCENTRATION_METHOD_PEG);
+            //polioData.setSecConMethod(Constants.LAB_CONCENTRATION_METHOD_PEG);
 
         } else if (btn.getTextOn().toString().equalsIgnoreCase("other")) {
 //            Toast.makeText(this, "other", Toast.LENGTH_LONG).show();
@@ -155,9 +182,8 @@ public class RecordingSecondryConsentration extends AppCompatActivity {
             ((EditText) findViewById(R.id.methodConcentrationEditText)).setVisibility(View.VISIBLE);
 
 //            polioData.setSecConMethod(Constants.LAB_CONCENTRATION_METHOD_OTHER);
-            polioData.setSecConMethod(((EditText) findViewById(R.id.methodConcentrationEditText)).getText().toString());
+            //polioData.setSecConMethod(((EditText) findViewById(R.id.methodConcentrationEditText)).getText().toString());
 //            polioData.setSecConOtherMethod(((EditText) findViewById(R.id.methodConcentrationEditText)).getText().toString());
-
 
         }
     }

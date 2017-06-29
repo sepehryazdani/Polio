@@ -83,9 +83,20 @@ public class ShippingField extends AppCompatActivity {
 
         try {
             polioData.setFieldShippedtemp(Float.parseFloat(((EditText) findViewById(R.id.fieldShippedTempEditText)).getText().toString()));
+            Log.d("navidi",this.getClass().getCanonicalName() + "::saveShippingField():: shipping field temp:" + polioData.getFieldtemp());
+
+            if(((EditText) findViewById(R.id.fieldShippedBy2TextEdit)).getText() == null){
+                throw  new NullPointerException("Shipped By field is empty, please enter something!");
+            }
+
             polioData.setFieldShippedBy2(((EditText) findViewById(R.id.fieldShippedBy2TextEdit)).getText().toString());
+            Log.d("navidi",this.getClass().getCanonicalName() + "::saveShippingField():: shipping field by:" + polioData.getFieldShippedBy2());
+
             DatePicker dp = ((DatePicker) findViewById(R.id.fieldDatePicker2));
             polioData.setFieldShippedOn2(dp.getDayOfMonth() + "-" + dp.getMonth() + "-" + dp.getYear());
+            Log.d("navidi",this.getClass().getCanonicalName() + "::saveShippingField():: shipping field time:" + polioData.getFieldShippedOn2());
+            Log.d("navidi",this.getClass().getCanonicalName() + "::saveShippingField():: shipping field was cold?:" + polioData.getShippedCold());
+
 
 //            polioData.setFieldWaterPh(Float.parseFloat(((EditText) findViewById(R.id.fieldWaterPHEditText)).getText().toString()));
 

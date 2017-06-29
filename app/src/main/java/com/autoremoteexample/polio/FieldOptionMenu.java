@@ -20,7 +20,7 @@ import com.autoremoteexample.polio.model.PolioScannerData;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class FieldOptionMenu extends AppCompatActivity implements View.OnClickListener{
+public class FieldOptionMenu extends AppCompatActivity implements View.OnClickListener {
 
     private Button samplePreparationButton;
     private Button startSettlingButton;
@@ -69,6 +69,7 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
     public void scanNowField(View view) {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
@@ -80,127 +81,139 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
         Log.v("navidi", "ScanNowField()::");
 
     }
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        //retrieve scan result
-        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        Log.v("navidi", "OnActivityResult()::");
 
-        if (scanningResult != null) {
-            Log.v("navidi", "OnActivityResult():: scanning result != null");
-            String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
-            polioData.setQrCodeContent(scanContent);
-            polioData.setQrCodeFormat(scanFormat);
-            Log.v("navidi", "OnActivityResult()::adding to poliodata");
-            Intent nextScreen = null;
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        try {
+            //retrieve scan result
+            IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+            Log.v("navidi", "OnActivityResult()::");
+
+            if (scanningResult != null) {
+                Log.v("navidi", "OnActivityResult():: scanning result != null");
+                String scanContent = scanningResult.getContents();
+                String scanFormat = scanningResult.getFormatName();
+
+                Log.d("navidi", "OnActivityResult()::SCANNED content:  " + scanContent);
+                Log.d("navidi", "OnActivityResult()::SCANNED format:  " + scanFormat);
+
+                polioData.setQrCodeContent(scanContent);
+                polioData.setQrCodeFormat(scanFormat);
+                Log.v("navidi", "OnActivityResult()::adding to poliodata");
+                Intent nextScreen = null;
 //            //initiating the qr code scan
 //
 //            // geeting the id and find out which button and then
 //            // navigte the proper intent from there call the proper function, maybe some changes.
-            Log.v("navidi", "OnActivityResult()::before switch");
-            switch (whichButtonWasClickedField.getId()) {
+                Log.v("navidi", "OnActivityResult()::before switch");
+                switch (whichButtonWasClickedField.getId()) {
 //
-                case R.id.samplePreparationButton:
+                    case R.id.samplePreparationButton:
 //
-                    Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to SamplePreparation");
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to SamplePreparation");
 //                    handleRecieptInLabratoryButton(whichButtonWasClicked);
-                    nextScreen = new Intent(getApplicationContext(), SamplePreparation.class);
-                    Log.v("navidi", "SamplePreparation after getting Context");
-                    nextScreen.putExtra("polioData", (Parcelable) polioData);
-                    Log.v("navidi", "SamplePreparation after putting Extra");
-                    startActivity(nextScreen);
+                        nextScreen = new Intent(getApplicationContext(), SamplePreparation.class);
+                        Log.v("navidi", "SamplePreparation after getting Context");
+                        nextScreen.putExtra("polioData", (Parcelable) polioData);
+                        Log.v("navidi", "SamplePreparation after putting Extra");
+                        startActivity(nextScreen);
 //
-                    break;
+                        break;
 //
-                case R.id.startSettlingButton:
-                    Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to StartingSettelingField");
+                    case R.id.startSettlingButton:
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to StartingSettelingField");
 //                    handleStorageInLabratoryButton(whichButtonWasClicked);
-                    nextScreen = new Intent(getApplicationContext(), StartingSettelingField.class);
-                    Log.v("navidi", "StartingSettelingField after getting Context");
-                    nextScreen.putExtra("polioData", (Parcelable) polioData);
-                    Log.v("navidi", "StartingSettelingField after putting Extra");
-                    startActivity(nextScreen);
-                    break;
+                        nextScreen = new Intent(getApplicationContext(), StartingSettelingField.class);
+                        Log.v("navidi", "StartingSettelingField after getting Context");
+                        nextScreen.putExtra("polioData", (Parcelable) polioData);
+                        Log.v("navidi", "StartingSettelingField after putting Extra");
+                        startActivity(nextScreen);
+                        break;
 //
-                case R.id.startFiltrationButton:
-                    Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to StartingFiltrationField");
+                    case R.id.startFiltrationButton:
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to StartingFiltrationField");
 
 //                    handlePresevativesInLabratoryButton(whichButtonWasClicked);
-                    nextScreen = new Intent(getApplicationContext(), StartingFiltrationField.class);
-                    Log.v("navidi", "StartingFiltrationField after getting Context");
-                    nextScreen.putExtra("polioData", (Parcelable) polioData);
-                    Log.v("navidi", "StartingFiltrationField after putting Extra");
-                    startActivity(nextScreen);
-                    break;
+                        nextScreen = new Intent(getApplicationContext(), StartingFiltrationField.class);
+                        Log.v("navidi", "StartingFiltrationField after getting Context");
+                        nextScreen.putExtra("polioData", (Parcelable) polioData);
+                        Log.v("navidi", "StartingFiltrationField after putting Extra");
+                        startActivity(nextScreen);
+                        break;
 //
-                case R.id.endFiltrationButton:
+                    case R.id.endFiltrationButton:
 //                    handleStartOfElutionInLabratoryButton(whichButtonWasClicked);
-                    Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to EndingFiltrationField");
-                    nextScreen = new Intent(getApplicationContext(), EndingFiltrationField.class);
-                    Log.v("navidi", " EndingFiltrationField after getting Context");
-                    nextScreen.putExtra("polioData", (Parcelable) polioData);
-                    Log.v("navidi", " EndingFiltrationField after putting Extra");
-                    startActivity(nextScreen);
-                    break;
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to EndingFiltrationField");
+                        nextScreen = new Intent(getApplicationContext(), EndingFiltrationField.class);
+                        Log.v("navidi", " EndingFiltrationField after getting Context");
+                        nextScreen.putExtra("polioData", (Parcelable) polioData);
+                        Log.v("navidi", " EndingFiltrationField after putting Extra");
+                        startActivity(nextScreen);
+                        break;
 //
-                case R.id.shipButton:
+                    case R.id.shipButton:
 //                    handleEndOfElutionInLabratoryButton(whichButtonWasClicked);
-                    Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to ShippingField");
-                    nextScreen = new Intent(getApplicationContext(), ShippingField.class);
-                    Log.v("navidi", "ShippingField after getting Context");
-                    nextScreen.putExtra("polioData", (Parcelable) polioData);
-                    Log.v("navidi", "ShippingField after putting Extra");
-                    startActivity(nextScreen);
-                    break;
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::in Scanning QR was done and now we are navigating to ShippingField");
+                        nextScreen = new Intent(getApplicationContext(), ShippingField.class);
+                        Log.v("navidi", "ShippingField after getting Context");
+                        nextScreen.putExtra("polioData", (Parcelable) polioData);
+                        Log.v("navidi", "ShippingField after putting Extra");
+                        startActivity(nextScreen);
+                        break;
 
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT).show();
             }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Oops! An unexpected event happened so we are taking back to Home page!", Toast.LENGTH_SHORT).show();
 
-
-        } else {
-            Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT).show();
+            Log.e("navidi", e.toString());
+            Intent nextScreen = new Intent(getApplicationContext(), ShippingField.class);
+            startActivity(nextScreen);
         }
     }
 
 
     @Override
     public void onClick(View view) {
-       try {
-           polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
-           whichButtonWasClickedField = view;
-           switch (view.getId()) {
+        try {
+            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
+            whichButtonWasClickedField = view;
+            switch (view.getId()) {
 
-               case R.id.samplePreparationButton:
-                   handleSamplePreparationButton(view);
-                   break;
+                case R.id.samplePreparationButton:
+                    handleSamplePreparationButton(view);
+                    break;
 
-            case R.id.startSettlingButton:
-                handleStartSettlingButton(view);
-                break;
+                case R.id.startSettlingButton:
+                    handleStartSettlingButton(view);
+                    break;
 
-            case R.id.startFiltrationButton:
-                handleStartFiltrationButton(view);
-                break;
+                case R.id.startFiltrationButton:
+                    handleStartFiltrationButton(view);
+                    break;
 
-            case R.id.endFiltrationButton:
-                handleEndFiltrationButton(view);
-                break;
+                case R.id.endFiltrationButton:
+                    handleEndFiltrationButton(view);
+                    break;
 
-            case R.id.shipButton:
-                handleShipButton(view);
-                break;
+                case R.id.shipButton:
+                    handleShipButton(view);
+                    break;
 
-               default:
-                   break;
-           }
-       }
-       catch (Exception e)
-       {
-           Toast.makeText(getApplicationContext(),
-                               "NULL", Toast.LENGTH_LONG).show();
-       }
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),
+                    "NULL", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleShipButton(final View view) {
