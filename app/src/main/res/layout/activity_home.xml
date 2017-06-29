@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.autoremoteexample.polio.Home">
+
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="\nPress the Field button if you are taking scans in the field.\n\nPress the Laboratory button if you are taking scans in the laboratory."
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/FieldButton"
+        android:layout_width="124dp"
+        android:layout_height="130dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_weight="5"
+        android:background="@drawable/feild_button_enlarged_2"
+        android:contentDescription=""
+        android:onClick="scanNow"
+        app:layout_constraintRight_toLeftOf="@+id/space"
+        app:layout_constraintTop_toTopOf="@+id/LabButton"
+        app:layout_constraintVertical_bias="0.509" />
+
+    <ImageButton
+        android:id="@+id/LabButton"
+        android:layout_width="124dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="5"
+        android:background="@drawable/lab_enlaeged"
+        android:contentDescription=""
+        android:onClick="onClickLabButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/space"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/space"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <!--<TableLayout-->
+    <!--android:layout_width="378dp"-->
+    <!--android:layout_height="519dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:backgroundTint="@android:drawable/btn_default"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--tools:layout_editor_absoluteX="3dp">-->
+
+    <!--<TableRow-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/imageView5"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_column="0"-->
+    <!--app:srcCompat="@drawable/pressfield"-->
+    <!--/>-->
+
+    <!--</TableRow>-->
+
+    <!--<TableRow-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/imageView6"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_column="0"-->
+    <!--app:srcCompat="@drawable/presslab" />-->
+
+    <!--</TableRow>-->
+
+    <!--<TableRow-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginBottom="100dp">-->
+
+    <!--</TableRow>-->
+
+    <!--<TableRow-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="horizontal" >-->
+
+    <!--<ImageButton-->
+    <!--android:id="@+id/FieldButton"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_column="0"-->
+    <!--android:layout_weight="5"-->
+    <!--android:background="@color/zxing_transparent"-->
+    <!--android:onClick="scanNow"-->
+    <!--app:srcCompat="@drawable/fieldbutton"-->
+    <!--tools:layout_editor_absoluteX="38dp"-->
+    <!--tools:layout_editor_absoluteY="278dp" />-->
+
+    <!--<ImageButton-->
+    <!--android:id="@+id/LabButton"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_column="1"-->
+    <!--android:layout_weight="5"-->
+    <!--android:background="@color/zxing_transparent"-->
+    <!--android:onClick="onClickLabButton"-->
+    <!--app:srcCompat="@drawable/laboratorybutton"-->
+    <!--tools:layout_editor_absoluteX="8dp"-->
+    <!--tools:layout_editor_absoluteY="174dp" />-->
+
+
+    <!--</TableRow>-->
+
+
+    <!--</TableLayout>-->
+
+
+</android.support.constraint.ConstraintLayout>

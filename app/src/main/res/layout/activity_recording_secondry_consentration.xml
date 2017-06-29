@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.autoremoteexample.polio.RecordingSecondryConsentration">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.autoremoteexample.polio.RecordingSecondryConsentration">
+
+        <!--<ScrollView-->
+        <!--android:layout_width="368dp"-->
+        <!--android:layout_height="495dp"-->
+        <!--tools:layout_editor_absoluteX="8dp"-->
+        <!--tools:layout_editor_absoluteY="8dp">-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Please answer the following questions."
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="1. Date of secondary concentration method"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+        <!--<Space-->
+            <!--android:layout_width="368dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:layout_editor_absoluteY="405dp"-->
+            <!--tools:layout_editor_absoluteX="8dp" />-->
+
+        <DatePicker
+            android:id="@+id/concentrationDatePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:layout_marginTop="-1dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView1"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <!--<Space-->
+            <!--android:layout_width="368dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:layout_editor_absoluteY="405dp"-->
+            <!--tools:layout_editor_absoluteX="8dp" />-->
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="25dp"
+            android:text="2. Concentrated by"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/concentrationDatePicker" />
+
+        <!--<Space-->
+            <!--android:layout_width="368dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:layout_editor_absoluteY="648dp"-->
+            <!--tools:layout_editor_absoluteX="8dp" />-->
+
+        <EditText
+            android:id="@+id/authorEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="200"
+            android:inputType="text"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <!--<Space-->
+            <!--android:layout_width="368dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:layout_editor_absoluteY="810dp"-->
+            <!--tools:layout_editor_absoluteX="8dp" />-->
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="3. Secondary Concentration method:"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authorEditText" />
+
+        <RadioGroup
+            android:id="@+id/secondaryConRadioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <ToggleButton
+                android:id="@+id/skimmedMilktoggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="onToggle"
+                android:text="Skimmed Milk Flocculation"
+                android:textOff="Skimmed Milk Flocculation"
+                android:textOn="Skimmed Milk Flocculation" />
+
+            <ToggleButton
+                android:id="@+id/pegToggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="onToggle"
+                android:text="PEG/NaCI"
+                android:textOff="PEG/NaCI"
+                android:textOn="PEG/NaCI" />
+
+            <ToggleButton
+                android:id="@+id/otherToggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:onClick="onToggle"
+                android:text="Other"
+                android:textOff="Other"
+                android:textOn="Other" />
+
+        </RadioGroup>
+
+        <!--<Space-->
+            <!--android:layout_width="368dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:layout_editor_absoluteY="81dp"-->
+            <!--tools:layout_editor_absoluteX="8dp" />-->
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="4. Secondary Concentration Method"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/secondaryConRadioGroup" />
+
+        <!--<Space-->
+            <!--android:layout_width="368dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:layout_editor_absoluteY="81dp"-->
+            <!--tools:layout_editor_absoluteX="8dp" />-->
+
+        <EditText
+            android:id="@+id/methodConcentrationEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            app:layout_constraintLeft_toLeftOf="@+id/textView5"
+            app:layout_constraintRight_toRightOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/filledblankbutton"
+            android:onClick="dummyButton11"
+            android:text="Save"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/methodConcentrationEditText" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
