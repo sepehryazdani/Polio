@@ -32,19 +32,20 @@ public class APIFunctionalities {
         }
     }
 
-
-    public static String convert2CommaSeperatedString(PolioScannerData polioData){
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(polioData.getLat() +  ",");
-        sb.append(polioData.getLng() +  ",");
-        sb.append(polioData.getSample_id());
-        sb.append(polioData.getTempreture());
-//adding the rest of fields in here
-
-        return sb.toString();
-
-    }
+//
+//    public static String convert2CommaSeperatedString(PolioScannerData polioData){
+//
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(polioData.getLat() +  ",");
+//        sb.append(polioData.getLng() +  ",");
+//        sb.append(polioData.getSample_id());
+//        sb.append(polioData.getTempreture());
+//
+////adding the rest of fields in here
+//
+//        return sb.toString();
+//
+//    }
 
 
 }

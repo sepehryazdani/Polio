@@ -19,7 +19,7 @@ public class StartingElutionLab extends AppCompatActivity {
 
 //    private DatePicker elutedDate;
 //    private EditText elutedBy;
-    private PolioScannerData polioData;
+    private static PolioScannerData polioData;
 
 
     @Override
@@ -29,9 +29,25 @@ public class StartingElutionLab extends AppCompatActivity {
         Log.v("navidi", this.getClass().getCanonicalName() + "::oncreate()");
 
         try {
-            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
-        }catch(Exception e){
-            Log.e("navidi","error in reading poliodata scanner in StartingElutionLab");
+            //new waY OF READING PARCELABLE
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                throw new NullPointerException(this.getClass().getCanonicalName() + "=Can't Retrived the Passed data in this activity!");
+
+            }
+
+            polioData = (PolioScannerData) bundle.getParcelable("polioData");
+            Log.d("navidi", this.getClass().getCanonicalName() + "::OnCreate()::Retrive Data from previous page.");
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::onCreate()\n\t::SampleId from polioDatascanner before save into file:" + polioData.getSample_id()
+                    + "\n\t::LAT from polioDatascanner before save into file:" + polioData.getLat()
+                    + "\n\t::LNG from polioDatascanner before save into file:" + polioData.getLng()
+                    + "\n\t::QR_COMTENT from polioDatascanner before save into file:" + polioData.getQrCodeContent());
+// End of reading parcelable in new way
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "There is a problem in Retriveing Data from Previous page! REASON:" + e.getMessage() + ",SOURCE:" + this.getClass().getCanonicalName(), Toast.LENGTH_SHORT).show();
+            Log.e("navidi", this.getClass().getCanonicalName() + "::error in reading poliodata scanner in " + this.getClass().getCanonicalName());
         }
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -71,6 +87,11 @@ public class StartingElutionLab extends AppCompatActivity {
 //            elutedDate = (DatePicker) findViewById(R.id.elutedDatePicker);
 
 //            polioData.setElutedByPerson(elutedBy.getText().toString().trim());
+
+            if(((EditText) findViewById(R.id.elutedByEditText)).getText() == null || ((EditText) findViewById(R.id.elutedByEditText)).getText().toString().equalsIgnoreCase("")){
+                throw new NullPointerException("Please enter the name of the person.");
+            }
+
 
             polioData.setElutedByPerson(((EditText) findViewById(R.id.elutedByEditText)).getText().toString());
 

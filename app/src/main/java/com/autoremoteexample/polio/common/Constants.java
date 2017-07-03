@@ -18,8 +18,9 @@ public class Constants {
     public static final int FIELD_SHIPPED_NOT_COLD=0;
     public static final int TEMP_LOGGER_INCLUDED=1;
     public static final int TEMP_LOGGER_NOT_INCLUDED=0;
-    public static final int SAMPLE_COLD=0;
+    public static final int SAMPLE_COLD=1;
     public static final int SAMPLE_NOT_COLD=0;
+    public static final int NOT_SELECTED_STATE = -1; // init step for temp not included and included in revieved in LAB
 
 
     public static final String FILE_NAME = "data1.bin";

@@ -55,9 +55,26 @@ public class LabOptionMenu extends AppCompatActivity implements View.OnClickList
 
 
         try {
-            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
+//            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
+            //new wat
+            Bundle bundle = getIntent().getExtras();
+            if(bundle == null){
+                throw  new NullPointerException("Can't Retrived the Passed data in this activity!");
+
+            }
+
+            polioData = (PolioScannerData) bundle.getParcelable("polioData");
+            Log.d("navidi" ,this.getClass().getCanonicalName() +"::OnCreate()::Retrive Data from previous page.");
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::onCreate()\n\t::SampleId from polioDatascanner before save into file:" + polioData.getSample_id()
+                    + "\n\t::LAT from polioDatascanner before save into file:" + polioData.getLat()
+                    + "\n\t::LNG from polioDatascanner before save into file:" + polioData.getLng()
+                    + "\n\t::QR_COMTENT from polioDatascanner before save into file:" + polioData.getQrCodeContent());
+
+
         } catch (Exception e) {
-            Log.e("navidi", "error in reading poliodata scanner in LAB MENUE");
+            Toast.makeText(getApplicationContext(), "There is a problem in Retriveing Data from Previous page! REASON:"+e.getMessage()+",SOURCE:"+this.getClass().getCanonicalName(), Toast.LENGTH_SHORT).show();
+            Log.e("navidi", "error in reading poliodata scanner in " + this.getClass().getCanonicalName());
         }
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         NetworkListener receiver = new NetworkListener();
@@ -73,9 +90,10 @@ public class LabOptionMenu extends AppCompatActivity implements View.OnClickList
         integrator.setPrompt("Scan QR barcode");
         integrator.setCameraId(0);
         integrator.setBeepEnabled(true);
+        integrator.setCaptureActivity(CaptureActivityPortait.class);
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
-        Log.v("navidi", "ScanNow()::");
+        Log.d("navidi", this.getClass().getCanonicalName() + "::ScanNow()::");
     }
 
     // handling the scanned stuff will happen here. so the scnaNow will trigger this method.
@@ -84,7 +102,7 @@ public class LabOptionMenu extends AppCompatActivity implements View.OnClickList
 
         try {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-            Log.v("navidi", this.getClass().getCanonicalName() + "OnActivityResult()::");
+//            Log.v("navidi", this.getClass().getCanonicalName() + "OnActivityResult()::");
 
             if (scanningResult != null && scanningResult.getContents() != null && scanningResult.getFormatName() != null) {
                 Log.v("navidi", "OnActivityResult():: scanning result != null");
@@ -92,7 +110,35 @@ public class LabOptionMenu extends AppCompatActivity implements View.OnClickList
                 String scanFormat = scanningResult.getFormatName();
                 polioData.setQrCodeContent(scanContent);
                 polioData.setQrCodeFormat(scanFormat);
-                Log.v("navidi", "OnActivityResult()::adding to poliodata");
+
+                Log.v("navidi", this.getClass().getCanonicalName() + "OnActivityResult()::"+polioData.getQrCodeContent());
+                //breaking up the content from QR code:
+                String[] commaSeperatedPairTokens = scanContent.replace("/","|").split(",");
+                for(String pairToken : commaSeperatedPairTokens ){
+                    String[] tokens = pairToken.split(":");
+                    Log.v("navidi", this.getClass().getCanonicalName() + "OnActivityResult(r)::Before Processing:"+pairToken + ",("+tokens[0] + ")=" + tokens[1] );
+                    // token[0] --> KEY
+                    // toekn[1] --> value
+                    if(tokens[0].equalsIgnoreCase("Sample Id")){
+                        polioData.setSample_id(tokens[1].trim());
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::Sample ID=" + polioData.getSample_id());
+
+                    }else if(tokens[0].equalsIgnoreCase("Lat")){
+                        polioData.setLat(tokens[1].trim());
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::Lat=" + polioData.getLat());
+                    }else if(tokens[0].equalsIgnoreCase("Lng")){
+                        polioData.setLng(tokens[1].trim());
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::Lng=" + polioData.getLng());
+
+                    }else{
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::["+tokens[0]+"]=" + tokens[1]);
+                    }
+
+                }
+
+
+
+                Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::adding to poliodata");
                 Intent nextScreen = null;
 //            //initiating the qr code scan
 //

@@ -1,142 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.autoremoteexample.polio.ShippingField">
 
-    <Button
-        android:id="@+id/dummyButton5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/filledblankbutton"
-        android:onClick="dummyButton5"
-        android:text="Save"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:fillViewport="true"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="8dp"
-        android:id="@+id/scrollView3">
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.autoremoteexample.polio.ShippingField">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+
+
 
             <TextView
                 android:id="@+id/textView30"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="356dp"
+                android:layout_height="22dp"
                 android:text="please answer the following questions."
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/textView19"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="1. Air Temperature (\u2103)" />
+                android:text="1. Air Temperature (\u2103)"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView30"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-            <EditText
-                android:id="@+id/fieldShippedTempEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/fieldShippedTempEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-                android:ems="10"
-                android:inputType="number" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="numberSigned"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
             <TextView
                 android:id="@+id/textView20"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="2. Shipped by" />
+                android:text="2. Shipped by"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/fieldShippedTempEditText"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-            <EditText
-                android:id="@+id/fieldShippedBy2TextEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/fieldShippedBy2TextEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="11dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@+id/textView20"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+
 
             <TextView
                 android:id="@+id/textView21"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="3. Shipped by" />
+                android:text="3. Shipped by"
+                android:layout_marginTop="7dp"
+                app:layout_constraintTop_toBottomOf="@+id/fieldShippedBy2TextEdit"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <DatePicker
                 android:id="@+id/fieldDatePicker2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:datePickerMode="spinner"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView21"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/textView22"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="4. Shipped with Cold Packs" />
+                android:text="4. Shipped with Cold Packs"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/fieldDatePicker2"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <Button
+            android:id="@+id/dummyButton5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/filledblankbutton"
+            android:onClick="dummyButton5"
+            android:text="Save"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/SampleColdShippedYesNoRadioGroup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" />
 
-                <RadioGroup
-                    android:id="@+id/SampleColdShippedYesNoRadioGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+        <RadioGroup
+            android:id="@+id/SampleColdShippedYesNoRadioGroup"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView22"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent">
 
-                    <ToggleButton
-                        android:id="@+id/toggleButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="onToggledShippedColdPacks"
-                        android:textOff="NO"
-                        android:textOn="NO" />
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onToggledShippedColdPacks"
+                android:textOff="NO"
+                android:textOn="NO" />
 
-                    <ToggleButton
-                        android:id="@+id/toggleButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="onToggledShippedColdPacks"
-                        android:textOff="Yes"
-                        android:textOn="Yes" />
+            <ToggleButton
+                android:id="@+id/toggleButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onToggledShippedColdPacks"
+                android:textOff="Yes"
+                android:textOn="Yes" />
 
-                </RadioGroup>
+        </RadioGroup>
 
-            </TableRow>
-
-        </LinearLayout>
-    </ScrollView>
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

@@ -12,7 +12,6 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autoremoteexample.polio.common.NetworkListener;
@@ -27,7 +26,7 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
     private Button startFiltrationButton;
     private Button endFiltrationButton;
     private Button shipButton;
-    private TextView t;
+//    private TextView t;
     private static PolioScannerData polioData;
     private View whichButtonWasClickedField;
 
@@ -61,6 +60,26 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
             polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
         } catch (Exception e) {
             Log.e("navidi", "error in reading poliodata scanner in FIELD MENUE");
+        }try {
+            //new waY OF READING PARCELABLE
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                throw new NullPointerException(this.getClass().getCanonicalName() + "=Can't Retrived the Passed data in this activity!");
+
+            }
+
+            polioData = (PolioScannerData) bundle.getParcelable("polioData");
+            Log.d("navidi", this.getClass().getCanonicalName() + "::OnCreate()::Retrive Data from previous page.");
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::onCreate()\n\t::SampleId from polioDatascanner before save into file:" + polioData.getSample_id()
+                    + "\n\t::LAT from polioDatascanner before save into file:" + polioData.getLat()
+                    + "\n\t::LNG from polioDatascanner before save into file:" + polioData.getLng()
+                    + "\n\t::QR_COMTENT from polioDatascanner before save into file:" + polioData.getQrCodeContent());
+// End of reading parcelable in new way
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "There is a problem in Retriveing Data from Previous page! REASON:" + e.getMessage() + ",SOURCE:" + this.getClass().getCanonicalName(), Toast.LENGTH_SHORT).show();
+            Log.e("navidi", this.getClass().getCanonicalName() + "::error in reading poliodata scanner in " + this.getClass().getCanonicalName());
         }
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -76,6 +95,7 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
         integrator.setPrompt("Scan QR barcode");
         integrator.setCameraId(0);
         integrator.setBeepEnabled(true);
+        integrator.setCaptureActivity(CaptureActivityPortait.class);
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
         Log.v("navidi", "ScanNowField()::");
@@ -97,8 +117,43 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
                 Log.d("navidi", "OnActivityResult()::SCANNED content:  " + scanContent);
                 Log.d("navidi", "OnActivityResult()::SCANNED format:  " + scanFormat);
 
+                if(scanContent==null){
+                    throw new NullPointerException("can't finish scanning properly.");
+                }
+
                 polioData.setQrCodeContent(scanContent);
                 polioData.setQrCodeFormat(scanFormat);
+
+                Log.v("navidi", this.getClass().getCanonicalName() + "OnActivityResult()::"+polioData.getQrCodeContent());
+                //breaking up the content from QR code:
+                String[] commaSeperatedPairTokens = scanContent.replace("/","|").split(",");
+                for(String pairToken : commaSeperatedPairTokens ){
+                    String[] tokens = pairToken.split(":");
+                    Log.v("navidi", this.getClass().getCanonicalName() + "OnActivityResult(r)::Before Processing:"+pairToken + ",("+tokens[0] + ")=" + tokens[1] );
+                    // token[0] --> KEY
+                    // toekn[1] --> value
+                    if(tokens[0].equalsIgnoreCase("Sample Id")){
+                        polioData.setSample_id(tokens[1].trim());
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::Sample ID=" + polioData.getSample_id());
+
+                    }else if(tokens[0].equalsIgnoreCase("Lat")){
+                        polioData.setLat(tokens[1].trim());
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::Lat=" + polioData.getLat());
+                    }else if(tokens[0].equalsIgnoreCase("Lng")){
+                        polioData.setLng(tokens[1].trim());
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::Lng=" + polioData.getLng());
+
+                    }else{
+                        Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::["+tokens[0]+"]=" + tokens[1]);
+                    }
+
+                }
+
+
+
+                Log.v("navidi", this.getClass().getCanonicalName() + "::OnActivityResult()::adding to poliodata");
+
+
                 Log.v("navidi", "OnActivityResult()::adding to poliodata");
                 Intent nextScreen = null;
 //            //initiating the qr code scan
@@ -171,10 +226,10 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Oops! An unexpected event happened so we are taking back to Home page!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Oops! An unexpected event happened, so we are taking back to Home page!", Toast.LENGTH_SHORT).show();
 
             Log.e("navidi", e.toString());
-            Intent nextScreen = new Intent(getApplicationContext(), ShippingField.class);
+            Intent nextScreen = new Intent(getApplicationContext(), Home.class);
             startActivity(nextScreen);
         }
     }

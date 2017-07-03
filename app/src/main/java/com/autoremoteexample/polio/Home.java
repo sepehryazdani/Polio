@@ -14,17 +14,20 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.autoremoteexample.polio.common.APIFunctionalities;
+import com.autoremoteexample.polio.common.Constants;
 import com.autoremoteexample.polio.common.NetworkListener;
 import com.autoremoteexample.polio.model.PolioScannerData;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.io.File;
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton fieldButton, labButton;
     //qr code scanner object
 //    private IntentIntegrator qrScan;
-    private static boolean isInFieldPath = true;
+    private boolean isInFieldPath = true;
     private static PolioScannerData polioData = new PolioScannerData();
 
     private Button syncData;

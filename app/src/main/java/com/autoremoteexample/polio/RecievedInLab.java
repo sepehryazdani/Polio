@@ -21,7 +21,7 @@ import com.autoremoteexample.polio.model.PolioScannerData;
 
 public class RecievedInLab extends AppCompatActivity {
 
-    private PolioScannerData polioData;
+    private  static PolioScannerData polioData;
 //    private String receivedDate;
 //    private String receivedBy;
 //    private String tempreture;
@@ -49,7 +49,7 @@ public class RecievedInLab extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.v("navidi","REceievedinLab::OnCreate()::");
+        Log.v("navidi", "REceievedinLab::OnCreate()::");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recieved_in_lab);
         //assign listener to the RadioGroup
@@ -69,18 +69,42 @@ public class RecievedInLab extends AppCompatActivity {
         refrigAnswerTableRow.setVisibility(View.GONE);
 
 
-        ((ToggleButton)findViewById(R.id.toggleButton1)).setSelected(false);
-        ((ToggleButton)findViewById(R.id.toggleButton2)).setSelected(false);
-        ((ToggleButton)findViewById(R.id.toggleButton3)).setSelected(false);
-        ((ToggleButton)findViewById(R.id.toggleButton4)).setSelected(false);
+        ((ToggleButton) findViewById(R.id.toggleButton1)).setSelected(false);
+        ((ToggleButton) findViewById(R.id.toggleButton2)).setSelected(false);
+        ((ToggleButton) findViewById(R.id.toggleButton3)).setSelected(false);
+        ((ToggleButton) findViewById(R.id.toggleButton4)).setSelected(false);
 
         try {
-            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
-        }catch(Exception e){
-            Log.e("navidi",this.getClass().getCanonicalName() + "::error in reading poliodata scanner in receivedLAB");
+//            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
+            //new waY OF READING PARCELABLE
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                throw new NullPointerException(this.getClass().getCanonicalName() + "=Can't Retrived the Passed data in this activity!");
+
+            }
+
+            polioData = (PolioScannerData) bundle.getParcelable("polioData");
+            Log.d("navidi", this.getClass().getCanonicalName() + "::OnCreate()::Retrive Data from previous page.");
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::onCreate()\n\t::SampleId from polioDatascanner before save into file:" + polioData.getSample_id()
+                    + "\n\t::LAT from polioDatascanner before save into file:" + polioData.getLat()
+                    + "\n\t::LNG from polioDatascanner before save into file:" + polioData.getLng()
+                    + "\n\t::QR_COMTENT from polioDatascanner before save into file:" + polioData.getQrCodeContent());
+// End of reading parcelable in new way
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "There is a problem in Retriveing Data from Previous page! REASON:"+e.getMessage()+",SOURCE:"+this.getClass().getCanonicalName(), Toast.LENGTH_SHORT).show();
+            Log.e("navidi", this.getClass().getCanonicalName() + "::error in reading poliodata scanner in receivedLAB");
         }
 
+        //init the cold or NOT
+        polioData.setSampleCold(Constants.NOT_SELECTED_STATE);
+        // init the tempreture field in revieced in lab
+        polioData.setLabReceivedTemp(Float.NaN);
 
+        // init the temp logger included
+        polioData.setTempLoggerIncluded(Constants.NOT_SELECTED_STATE);
+        polioData.setTempLoggerNotIncluded(Constants.NOT_SELECTED_STATE);
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         NetworkListener receiver = new NetworkListener();
@@ -111,30 +135,55 @@ public class RecievedInLab extends AppCompatActivity {
 //        return(super.onOptionsItemSelected(item));
 //    }
 
-    public void saveRecieptInLab(){
+    public void saveRecieptInLab() {
 
         try {
-            Log.v("navidi", this.getClass().getCanonicalName() + "::oncreate()::start saving data .");
-        polioData.setLabRecievedBy(((EditText) findViewById(R.id.labRecievedBy)).getText().toString());
-            Log.v("navidi",this.getClass().getCanonicalName()+"::QR::" + polioData.getQrCodeContent());
+            Log.d("navidi", this.getClass().getCanonicalName() + "::saveRecieptInLab()::start saving data .");
+
+            if (((EditText) findViewById(R.id.labRecievedBy)).getText() == null || ((EditText) findViewById(R.id.labRecievedBy)).getText().toString().equalsIgnoreCase("")) {
+                throw new NullPointerException("Doer name is null");
+            }
+
+            polioData.setLabRecievedBy(((EditText) findViewById(R.id.labRecievedBy)).getText().toString());
+            Log.d("navidi", this.getClass().getCanonicalName() + "::saveRecieptInLab()::QR::" + polioData.getQrCodeContent());
 
 
-        DatePicker dp1 = ((DatePicker) findViewById(R.id.labRecievedOn));
-        polioData.setLabRecievedOn(dp1.getDayOfMonth() + "-" + dp1.getMonth() + "-" + dp1.getYear());
+            DatePicker dp1 = ((DatePicker) findViewById(R.id.labRecievedOn));
+            polioData.setLabRecievedOn(dp1.getDayOfMonth() + "-" + dp1.getMonth() + "-" + dp1.getYear());
 
+            if (polioData.getTempLoggerIncluded() != Constants.NOT_SELECTED_STATE && polioData.getTempLoggerNotIncluded() == Constants.NOT_SELECTED_STATE) {
+// included so read the temp field
+                if (((EditText) findViewById(R.id.labReceivedTemp)).getText() == null || ((EditText) findViewById(R.id.labReceivedTemp)).getText().toString().equalsIgnoreCase("")) {
+                    throw new NullPointerException("Tempreture field is empty.");
+                }
+                polioData.setLabReceivedTemp(Float.parseFloat(((EditText) findViewById(R.id.labReceivedTemp)).getText().toString()));
+                Log.d("navidi", this.getClass().getCanonicalName() + "::save()::temp:" + polioData.getLabReceivedTemp());
+                polioData.setSampleCold(Constants.NOT_SELECTED_STATE);
+                polioData.setSampleNotCold(Constants.NOT_SELECTED_STATE);
 
-        polioData.setLabReceivedTemp(Float.parseFloat(((EditText) findViewById(R.id.labReceivedTemp)).getText().toString()));
+            } else if (polioData.getTempLoggerIncluded() == Constants.NOT_SELECTED_STATE && polioData.getTempLoggerNotIncluded() != Constants.NOT_SELECTED_STATE) {
+                // check the other section and make sure they have proper values for
+                if (polioData.getSampleCold() == Constants.NOT_SELECTED_STATE && polioData.getSampleNotCold() == Constants.NOT_SELECTED_STATE) {
+                    throw new NullPointerException("sample is cold or not? nothing was selected.");
+                }
+                polioData.setTempLoggerNotIncluded(Constants.NOT_SELECTED_STATE);
+                polioData.setTempLoggerIncluded(Constants.NOT_SELECTED_STATE);
+                polioData.setLabReceivedTemp(Float.NaN);
 
-        Intent nextScreen = new Intent(getApplicationContext(), FinalActivityLab.class);
-        nextScreen.putExtra("polioData", (Parcelable) polioData);
-        startActivity(nextScreen);
+            } else {
+                throw new NullPointerException("temp logger included or not? nothing was selected.");
+            }
+
+            Intent nextScreen = new Intent(getApplicationContext(), FinalActivityLab.class);
+            nextScreen.putExtra("polioData", (Parcelable) polioData);
+            startActivity(nextScreen);
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Please fill out the required fields!", Toast.LENGTH_SHORT).show();
-            Log.e("navidi", this.getClass().getCanonicalName() + "::oncreate():: ."+e.getMessage());
+            Log.e("navidi", this.getClass().getCanonicalName() + "::saveRecieptInLab():: ." + e.getMessage());
             e.printStackTrace();
         }
-        Log.v("navidi", this.getClass().getCanonicalName() + "::oncreate()::End of 6.RecievedInLab .");
+        Log.d("navidi", this.getClass().getCanonicalName() + "::saveRecieptInLab()::End of 6.RecievedInLab .");
 
 
     }
@@ -143,19 +192,19 @@ public class RecievedInLab extends AppCompatActivity {
     public void onToggleTempYesNo(View view) {
 
 
-
-        ((RadioGroup)view.getParent()).check(0); // force the toggle buttons to work exactly like radiobutton, don't toggle when doule tab on one toggle btn
+        ((RadioGroup) view.getParent()).check(0); // force the toggle buttons to work exactly like radiobutton, don't toggle when doule tab on one toggle btn
         // then set to the correct value.
-        ((RadioGroup)view.getParent()).check(view.getId());
+        ((RadioGroup) view.getParent()).check(view.getId());
 
         //handling what needs to be done after toggling.
-        RadioGroup togglegroup =  ((RadioGroup)view.getParent());
+        RadioGroup togglegroup = ((RadioGroup) view.getParent());
         ToggleButton btn = (ToggleButton) findViewById(togglegroup.getCheckedRadioButtonId());
 
-        if(btn.getText().toString().equalsIgnoreCase("Yes") ){
+        if (btn.getText().toString().equalsIgnoreCase("Yes")) {
             //skimmed milk btn, so handle that one.
 //            Toast.makeText(this, "yes", Toast.LENGTH_LONG).show();
             polioData.setTempLoggerIncluded(Constants.TEMP_LOGGER_INCLUDED);
+            polioData.setTempLoggerNotIncluded(Constants.NOT_SELECTED_STATE);
 
             TableRow tempretureQuestsionTableRow = (TableRow) findViewById(R.id.tempretureQuestsionTableRow);
             TableRow tempretureAnswerTableRow = (TableRow) findViewById(R.id.tempretureAnswerTableRow);
@@ -169,9 +218,10 @@ public class RecievedInLab extends AppCompatActivity {
             refrigAnswerTableRow.setVisibility(View.GONE);
 
 
-        } else  if(btn.getTextOn().toString().equalsIgnoreCase("No") ){
+        } else if (btn.getTextOn().toString().equalsIgnoreCase("No")) {
 ////            Toast.makeText(this, "no", Toast.LENGTH_LONG).show();
             polioData.setTempLoggerNotIncluded(Constants.TEMP_LOGGER_NOT_INCLUDED);
+            polioData.setTempLoggerIncluded(Constants.NOT_SELECTED_STATE);
 //
             TableRow tempretureQuestsionTableRow = (TableRow) findViewById(R.id.tempretureQuestsionTableRow);
             TableRow tempretureAnswerTableRow = (TableRow) findViewById(R.id.tempretureAnswerTableRow);
@@ -190,32 +240,32 @@ public class RecievedInLab extends AppCompatActivity {
     public void onToggleSampleCold(View view) {
 
 
-        ((RadioGroup)view.getParent()).check(0); // force thetoggle buttons to work exactly like radiobutton, don't toggle when doule tab on one toggle btn
+        ((RadioGroup) view.getParent()).check(0); // force thetoggle buttons to work exactly like radiobutton, don't toggle when doule tab on one toggle btn
         // then set to the correct value.
-        ((RadioGroup)view.getParent()).check(view.getId());
+        ((RadioGroup) view.getParent()).check(view.getId());
 
         //handling what needs to be done after toggling.
-        RadioGroup togglegroup =  ((RadioGroup)view.getParent());
+        RadioGroup togglegroup = ((RadioGroup) view.getParent());
         ToggleButton btn = (ToggleButton) findViewById(togglegroup.getCheckedRadioButtonId());
 
-        if(btn.getText().toString().equalsIgnoreCase("Yes") ){
+        if (btn.getText().toString().equalsIgnoreCase("Yes")) {
 
 //            Toast.makeText(this, "yes", Toast.LENGTH_LONG).show();
 
             polioData.setSampleCold(Constants.SAMPLE_COLD);
+            polioData.setSampleNotCold(Constants.NOT_SELECTED_STATE);
 
 
-        } else  if(btn.getTextOn().toString().equalsIgnoreCase("No") ){
+        } else if (btn.getTextOn().toString().equalsIgnoreCase("No")) {
 //           Toast.makeText(this, "no", Toast.LENGTH_LONG).show();
 
             polioData.setSampleNotCold(Constants.SAMPLE_NOT_COLD);
-
+            polioData.setSampleCold(Constants.NOT_SELECTED_STATE);
 
         }
     }
 
-    public void dummyButton6(View view)
-    {
+    public void dummyButton6(View view) {
         saveRecieptInLab();
 //        Intent nextScreen = new Intent(getApplicationContext(), FinalActivityLab.class);
 //        nextScreen.putExtra("polioData", (Parcelable) polioData);

@@ -11,51 +11,51 @@ import java.io.Serializable;
 
 public class PolioScannerData implements Parcelable, Serializable {
 
-    private String username = "Navidamo Navidam";
-    private float tempreture;
-    private String qrCodeFormat;
-    private String qrCodeContent;
+    private String username = "";
+    private float tempreture = Float.MIN_VALUE;
 
-
+    private String qrCodeFormat = "INITQRFORMAT";
+    private String qrCodeContent = "INITQRCONTENT";
+    //adding this field according to API v1
+    private String sample_id = "INITSAMPLEID";
+    private String lat = "INITLAT";
+    private String lng = "INITLNG";
     //Satrt Elution
     private String elutedByPerson;
     private String elutedBydate;
 
     //End Ellution
-    private float recoveredElutedmL;
+    private float recoveredElutedmL  = Float.MIN_VALUE;;
 
 
     //now field parts
-    private int rainYesterday;
-    private int rainToday;
-    private float fieldtemp;
+    private int rainYesterday  = Integer.MIN_VALUE;
+    private int rainToday= Integer.MIN_VALUE; ;
+    private float fieldtemp  = Float.MIN_VALUE;;
     private String fieldShippedBy;
     private String fieldShippedOn;
-    private float fieldWaterPh;
-    private float fieldVolume;
-    private  float fieldVolumeAfter;
-    private  float fieldVolumeRemaining;
-    private int shippedCold;
-    private float fieldShippedtemp;
+    private float fieldWaterPh  = Float.MIN_VALUE;;
+    private float fieldVolume  = Float.MIN_VALUE;;
+    private float fieldVolumeAfter  = Float.MIN_VALUE;;
+    private float fieldVolumeRemaining  = Float.MIN_VALUE;;
+    private int shippedCold = Integer.MIN_VALUE;;
+    private float fieldShippedtemp  = Float.MIN_VALUE;;
     private String fieldShippedBy2;
     private String fieldShippedOn2;
 
-// secondary concenteration
+    // secondary concenteration
     private String author;
 
-    //adding this field according to API v1
-    private String sample_id;
-    private String lat;
-    private String lng;
+
 
     //RECIEVED IN LAB
-    private int tempLoggerIncluded;
-    private int tempLoggerNotIncluded;
+    private int tempLoggerIncluded = Integer.MIN_VALUE;;
+    private int tempLoggerNotIncluded= Integer.MIN_VALUE;;
     private String labRecievedBy;
     private String labRecievedOn;
-    private float labReceivedTemp;
-    private int sampleCold;
-    private int sampleNotCold;
+    private float labReceivedTemp  = Float.MIN_VALUE;;
+    private int sampleCold= Integer.MIN_VALUE;;
+    private int sampleNotCold= Integer.MIN_VALUE;;
 
     //Secondary Concentration
     private String concentratedOn;
@@ -70,8 +70,17 @@ public class PolioScannerData implements Parcelable, Serializable {
     protected PolioScannerData(Parcel in) {
         username = in.readString();
         tempreture = in.readFloat();
+
         qrCodeContent = in.readString();
         qrCodeFormat = in.readString();
+
+
+        // field from API v1
+        sample_id = in.readString();
+        lat = in.readString();
+        lng = in.readString();
+
+
         elutedByPerson = in.readString();
         elutedBydate = in.readString();
         recoveredElutedmL = in.readFloat();
@@ -87,19 +96,15 @@ public class PolioScannerData implements Parcelable, Serializable {
         fieldVolumeAfter = in.readFloat();
         fieldVolumeRemaining = in.readFloat();
         shippedCold = in.readInt();
-        fieldShippedtemp=in.readFloat();
+        fieldShippedtemp = in.readFloat();
         fieldShippedBy2 = in.readString();
         fieldShippedOn2 = in.readString();
 
 // secondary concenteration
         author = in.readString();
 
-    // field from API v1
-        sample_id = in.readString();
-        lat = in.readString();
-        lng = in.readString();
 
-    //Recieved in lab data
+        //Recieved in lab data
         tempLoggerIncluded = in.readInt();
         tempLoggerNotIncluded = in.readInt();
         labRecievedBy = in.readString();
@@ -108,7 +113,7 @@ public class PolioScannerData implements Parcelable, Serializable {
         sampleCold = in.readInt();
         sampleNotCold = in.readInt();
 
-    //Secondary Concentration
+        //Secondary Concentration
         concentratedOn = in.readString();
         concentratedBy = in.readString();
         secConMethod = in.readString();
@@ -222,33 +227,61 @@ public class PolioScannerData implements Parcelable, Serializable {
         this.fieldWaterPh = fieldWaterPh;
     }
 
-    public float getFieldVolume() {return fieldVolume;}
+    public float getFieldVolume() {
+        return fieldVolume;
+    }
 
-    public void setFieldVolume(float fieldVolume) {this.fieldVolume = fieldVolume;}
+    public void setFieldVolume(float fieldVolume) {
+        this.fieldVolume = fieldVolume;
+    }
 
-    public float getFieldVolumeAfter() {return fieldVolumeAfter;}
+    public float getFieldVolumeAfter() {
+        return fieldVolumeAfter;
+    }
 
-    public void setFieldVolumeAfter(float fieldVolumeAfter) {this.fieldVolumeAfter = fieldVolumeAfter;}
+    public void setFieldVolumeAfter(float fieldVolumeAfter) {
+        this.fieldVolumeAfter = fieldVolumeAfter;
+    }
 
-    public float getFieldVolumeRemaining() {return fieldVolumeRemaining;}
+    public float getFieldVolumeRemaining() {
+        return fieldVolumeRemaining;
+    }
 
-    public void setFieldVolumeRemaining(float fieldVolumeRemaining) {this.fieldVolumeRemaining = fieldVolumeRemaining;}
+    public void setFieldVolumeRemaining(float fieldVolumeRemaining) {
+        this.fieldVolumeRemaining = fieldVolumeRemaining;
+    }
 
-    public int getShippedCold() {return shippedCold;}
+    public int getShippedCold() {
+        return shippedCold;
+    }
 
-    public void setShippedCold(int shippedCold) {this.shippedCold = shippedCold;}
+    public void setShippedCold(int shippedCold) {
+        this.shippedCold = shippedCold;
+    }
 
-    public float getFieldShippedtemp() {return fieldShippedtemp;}
+    public float getFieldShippedtemp() {
+        return fieldShippedtemp;
+    }
 
-    public void setFieldShippedtemp(float fieldShippedtemp) {this.fieldShippedtemp = fieldShippedtemp;}
+    public void setFieldShippedtemp(float fieldShippedtemp) {
+        this.fieldShippedtemp = fieldShippedtemp;
+    }
 
-    public String getFieldShippedBy2() {return fieldShippedBy2;}
+    public String getFieldShippedBy2() {
+        return fieldShippedBy2;
+    }
 
-    public void setFieldShippedBy2(String fieldShippedBy2) {this.fieldShippedBy2 = fieldShippedBy2;}
+    public void setFieldShippedBy2(String fieldShippedBy2) {
+        this.fieldShippedBy2 = fieldShippedBy2;
+    }
 
-    public String getFieldShippedOn2() {return fieldShippedOn2;}
+    public String getFieldShippedOn2() {
+        return fieldShippedOn2;
+    }
 
-    public void setFieldShippedOn2(String fieldShippedOn2) {this.fieldShippedOn2 = fieldShippedOn2;}
+    public void setFieldShippedOn2(String fieldShippedOn2) {
+        this.fieldShippedOn2 = fieldShippedOn2;
+    }
 
     public String getAuthor() {
         return author;
@@ -375,8 +408,15 @@ public class PolioScannerData implements Parcelable, Serializable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(username);
         dest.writeFloat(tempreture);
+
         dest.writeString(qrCodeContent);
         dest.writeString(qrCodeFormat);
+        // API v1 fields
+        dest.writeString(sample_id);
+        dest.writeString(lat);
+        dest.writeString(lng);
+
+
         dest.writeString(elutedByPerson);
         dest.writeString(elutedBydate);
         dest.writeFloat(recoveredElutedmL);
@@ -402,11 +442,6 @@ public class PolioScannerData implements Parcelable, Serializable {
 
 
 
-        // API v1 fields
-        dest.writeString(sample_id);
-        dest.writeString(lat);
-        dest.writeString(lng);
-
 
         //Recieved in Lab
         dest.writeInt(tempLoggerIncluded);
@@ -423,8 +458,6 @@ public class PolioScannerData implements Parcelable, Serializable {
         dest.writeString(secConMethod);
 
 
-
-
     }
 
     //reading back to object from serilization process - unmarshaling data
@@ -439,7 +472,6 @@ public class PolioScannerData implements Parcelable, Serializable {
             return new PolioScannerData[size];
         }
     };
-
 
 
 }

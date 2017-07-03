@@ -17,7 +17,7 @@ import com.autoremoteexample.polio.model.PolioScannerData;
 public class RecordTempLab extends AppCompatActivity {
 
     //    private NumberPicker temp;
-    private PolioScannerData polioData;
+    private static PolioScannerData polioData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +31,28 @@ public class RecordTempLab extends AppCompatActivity {
 //        temp.setOnClickListener(this);
         try {
             Log.v("navidi", this.getClass().getCanonicalName() + "::oncreate()::before reading poliodata from prev activity.");
-            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
-            Log.v("navidi", this.getClass().getCanonicalName() + "::oncreate()::after reading poliodata from prev activity.");
+//            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
+            //new waY OF READING PARCELABLE
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                throw new NullPointerException(this.getClass().getCanonicalName() + "=Can't Retrived the Passed data in this activity!");
+
+            }
+
+            polioData = (PolioScannerData) bundle.getParcelable("polioData");
+            Log.d("navidi", this.getClass().getCanonicalName() + "::OnCreate()::Retrive Data from previous page.");
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::onCreate()\n\t::SampleId from polioDatascanner before save into file:" + polioData.getSample_id()
+                    + "\n\t::LAT from polioDatascanner before save into file:" + polioData.getLat()
+                    + "\n\t::LNG from polioDatascanner before save into file:" + polioData.getLng()
+                    + "\n\t::QR_COMTENT from polioDatascanner before save into file:" + polioData.getQrCodeContent());
+// End of reading parcelable in new way
+
         } catch (Exception e) {
-            Log.e("navidi", this.getClass().getCanonicalName() + "::error in reading poliodata scanner in receivedLAB");
+            Toast.makeText(getApplicationContext(), "There is a problem in Retriveing Data from Previous page! REASON:"+e.getMessage()+",SOURCE:"+this.getClass().getCanonicalName(), Toast.LENGTH_SHORT).show();
+            Log.e("navidi", this.getClass().getCanonicalName() + "::error in reading poliodata scanner in " + this.getClass().getCanonicalName());
         }
+
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         NetworkListener receiver = new NetworkListener();
@@ -79,6 +96,9 @@ public class RecordTempLab extends AppCompatActivity {
 
 //            if(t.getText()!=null && t.getText().toString().equalsIgnoreCase("")) {
                 polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
+
+
+
                 polioData.setTempreture(Float.parseFloat(t.getText().toString()));
                 Log.d("navidi",this.getClass().getCanonicalName()+"::saveTemp()::QR::" + polioData.getQrCodeContent());
                 Intent nextScreen = new Intent(getApplicationContext(), FinalActivityLab.class);

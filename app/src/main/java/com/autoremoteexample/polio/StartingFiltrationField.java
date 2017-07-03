@@ -16,7 +16,7 @@ import com.autoremoteexample.polio.model.PolioScannerData;
 
 public class StartingFiltrationField extends AppCompatActivity {
 
-    private PolioScannerData polioData;
+    private static PolioScannerData polioData;
 
 
     @Override
@@ -25,9 +25,25 @@ public class StartingFiltrationField extends AppCompatActivity {
         setContentView(R.layout.activity_starting_filtration_field);
 
         try {
-            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
-        }catch(Exception e){
-            Log.e("navidi",this.getClass().getCanonicalName() + "::error in reading poliodata scanner in receivedLAB");
+            //new waY OF READING PARCELABLE
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                throw new NullPointerException(this.getClass().getCanonicalName() + "=Can't Retrived the Passed data in this activity!");
+
+            }
+
+            polioData = (PolioScannerData) bundle.getParcelable("polioData");
+            Log.d("navidi", this.getClass().getCanonicalName() + "::OnCreate()::Retrive Data from previous page.");
+
+            Log.d("navidi", this.getClass().getCanonicalName() + "::onCreate()\n\t::SampleId from polioDatascanner before save into file:" + polioData.getSample_id()
+                    + "\n\t::LAT from polioDatascanner before save into file:" + polioData.getLat()
+                    + "\n\t::LNG from polioDatascanner before save into file:" + polioData.getLng()
+                    + "\n\t::QR_COMTENT from polioDatascanner before save into file:" + polioData.getQrCodeContent());
+// End of reading parcelable in new way
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "There is a problem in Retriveing Data from Previous page! REASON:" + e.getMessage() + ",SOURCE:" + this.getClass().getCanonicalName(), Toast.LENGTH_SHORT).show();
+            Log.e("navidi", this.getClass().getCanonicalName() + "::error in reading poliodata scanner in " + this.getClass().getCanonicalName());
         }
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -67,7 +83,6 @@ public class StartingFiltrationField extends AppCompatActivity {
 //            Toast.makeText(getApplicationContext(),
 //                               t.getText(), Toast.LENGTH_LONG).show();
 
-            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
 
             polioData.setFieldVolumeAfter(Float.parseFloat(t.getText().toString()));
 
@@ -76,6 +91,7 @@ public class StartingFiltrationField extends AppCompatActivity {
 //            Toast.makeText(this, " "+ polioData.getFieldVolumeAfter()+"  L", Toast.LENGTH_LONG).show();
             Intent nextScreen = new Intent(getApplicationContext(), FinalActivityField.class);
             nextScreen.putExtra("polioData",(Parcelable)polioData);
+            polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
             startActivity(nextScreen);
 
         } catch (Exception e) {
