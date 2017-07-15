@@ -1,25 +1,17 @@
 package com.autoremoteexample.polio;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +20,6 @@ import com.autoremoteexample.polio.model.PolioScannerData;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.util.List;
-
 public class FieldOptionMenu extends AppCompatActivity implements View.OnClickListener {
 
     private Button samplePreparationButton;
@@ -37,8 +27,7 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
     private Button startFiltrationButton;
     private Button endFiltrationButton;
     private Button shipButton;
-
-    //    private TextView t;
+//    private TextView t;
     private static PolioScannerData polioData;
     private View whichButtonWasClickedField;
 
@@ -67,17 +56,12 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
 
         shipButton = (Button) findViewById(R.id.shipButton);
         shipButton.setOnClickListener(this);
-       
 
         try {
             polioData = (PolioScannerData) getIntent().getParcelableExtra("polioData");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e("navidi", "error in reading poliodata scanner in FIELD MENUE");
-        }
-
-
-        try {
+        }try {
             //new waY OF READING PARCELABLE
             Bundle bundle = getIntent().getExtras();
             if (bundle == null) {
@@ -112,7 +96,6 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
         integrator.setPrompt("Scan QR barcode");
         integrator.setCameraId(0);
         integrator.setBeepEnabled(true);
-        integrator.setCaptureActivity(CaptureActivityPortait.class);
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
         Log.v("navidi", "ScanNowField()::");
@@ -251,6 +234,7 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+
     @Override
     public void onClick(View view) {
         try {
@@ -287,42 +271,12 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void handleSamplePreparationButton(final View view) {
-        AlertDialog.Builder mDialog = new AlertDialog.Builder(FieldOptionMenu.this);
-
-        mDialog.setCancelable(true);
-
-        mDialog.setMessage("Are you begining to prepare to take the BMFS sample?");
-        mDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        scanNowField(view);
-//                        Intent nextScreen = new Intent(getApplicationContext(), SamplePreparation.class);
-//                        nextScreen.putExtra("polioData",(Parcelable)polioData);
-//                        startActivity(nextScreen);
-                    }
-//                dialog.cancel();
-                }
-        );
-
-        mDialog.setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = mDialog.create();
-        alert.show();
-        alert.getWindow().setBackgroundDrawableResource(android.R.color.background_light);
-    }
-
     private void handleShipButton(final View view) {
         AlertDialog.Builder mDialog = new AlertDialog.Builder(FieldOptionMenu.this);
 
         mDialog.setCancelable(false);
 
-        mDialog.setMessage(Html.fromHtml("Is the sample ready to be packed for shipment to the processing laboratory?"));
+        mDialog.setMessage(Html.fromHtml("Is the sample packed up and being shipped to the processing laboratory?"));
         mDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         scanNowField(view);
@@ -382,7 +336,7 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
 
         mDialog.setCancelable(false);
 
-        mDialog.setMessage(Html.fromHtml("Has the bag already been hung on the tripod <b>and</b> the settled volume bled off?"));
+        mDialog.setMessage(Html.fromHtml("Has the filtration begun <b>and</b> the bag has already been hung on the tripod <b>and</b> the settled volume bled off?"));
         mDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         scanNowField(view);
@@ -437,4 +391,33 @@ public class FieldOptionMenu extends AppCompatActivity implements View.OnClickLi
         alert.getWindow().setBackgroundDrawableResource(android.R.color.background_light);
     }
 
+    private void handleSamplePreparationButton(final View view) {
+        AlertDialog.Builder mDialog = new AlertDialog.Builder(FieldOptionMenu.this);
+
+        mDialog.setCancelable(false);
+
+        mDialog.setMessage("Are you begining to prepare to take the BMFS sample?");
+        mDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        scanNowField(view);
+//                        Intent nextScreen = new Intent(getApplicationContext(), SamplePreparation.class);
+//                        nextScreen.putExtra("polioData",(Parcelable)polioData);
+//                        startActivity(nextScreen);
+                    }
+//                dialog.cancel();
+                }
+        );
+
+        mDialog.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = mDialog.create();
+        alert.show();
+        alert.getWindow().setBackgroundDrawableResource(android.R.color.background_light);
+    }
 }

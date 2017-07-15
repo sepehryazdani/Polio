@@ -2,7 +2,6 @@ package com.autoremoteexample.polio.common;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,7 +12,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 /**
  * Created by unknwon on 6/13/2017.
@@ -82,25 +80,18 @@ class SendDataToServer extends AsyncTask<String[], String, String> {
 
             Log.d("navidi", this.getClass().getCanonicalName() + "::doinbackground::API Response:" + polioJsonResponse );
 
-
-//            try {
-            //send to post execute
-//                this.onPostExecute(PolioJsonResponse);
             return polioJsonResponse;
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
+
 
         } catch (IOException e) {
             exception = e;
             Log.e("navidi", this.getClass().getCanonicalName() + "::ioexception");
-//            Toast.makeText(null, "ERROR: Calling API.", Toast.LENGTH_LONG).show();
 
             e.printStackTrace();
 
         } catch (Exception e) {
             exception =e;
+
             Log.e("navidi", this.getClass().getCanonicalName() + "::exception");
             e.printStackTrace();
 
@@ -124,9 +115,12 @@ class SendDataToServer extends AsyncTask<String[], String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         Log.d("navidi",this.getClass().getCanonicalName() + "::onPostExecute()::"+s);
+
         if(exception != null){
             if(exception instanceof IOException){
+
                 Log.d("navidi",this.getClass().getCanonicalName() + "::onPostExecute()::ERROR1:" +((IOException) exception));
+
             }else {
                 Log.d("navidi",this.getClass().getCanonicalName() + "::onPostExecute()::ERROR2:" +exception);
             }

@@ -189,7 +189,7 @@
                     android:id="@+id/textView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="4. Was the Sample cold upon receipt?"
+                    android:text="4. Was the Sample cold apon receipt?"
                     app:layout_constraintLeft_toLeftOf="@+id/labReceivedTemp"
                     app:layout_constraintRight_toRightOf="@+id/labReceivedTemp"
                     app:layout_constraintTop_toBottomOf="@+id/labReceivedTemp" />

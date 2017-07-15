@@ -1,13 +1,18 @@
 package com.autoremoteexample.polio;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +22,7 @@ import com.autoremoteexample.polio.common.APIFunctionalities;
 import com.autoremoteexample.polio.common.Constants;
 import com.autoremoteexample.polio.common.NetworkListener;
 import com.autoremoteexample.polio.model.PolioScannerData;
+import com.autoremoteexample.polio.service.GPSTracker;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -76,6 +82,25 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
+//        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
+//        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+//
+//            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+//                    GPSTracker.MY_PERMISSION_ACCESS_COURSE_LOCATION );
+//        }
+        GPSTracker gps = new GPSTracker(this.getBaseContext());
+        Double lng = gps.getLongitude();
+        Double lat = gps.getLatitude();
+
+        if(lng != null && lat != null){
+            Log.d("navidi",this.getClass().getCanonicalName() + "::lat:" + lat + " lng:"+lng);
+        }else{
+
+            Log.e("navidi",this.getClass().getCanonicalName() + "::ERROR getting location!");
+        }
+
+
 
         Intent nextScreen = null;
         switch (view.getId()) {

@@ -1,1 +1,0 @@
-this is the polio tracker porject.

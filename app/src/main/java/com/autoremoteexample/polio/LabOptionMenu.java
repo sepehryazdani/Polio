@@ -90,7 +90,6 @@ public class LabOptionMenu extends AppCompatActivity implements View.OnClickList
         integrator.setPrompt("Scan QR barcode");
         integrator.setCameraId(0);
         integrator.setBeepEnabled(true);
-        integrator.setCaptureActivity(CaptureActivityPortait.class);
         integrator.setBarcodeImageEnabled(true);
         integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
         Log.d("navidi", this.getClass().getCanonicalName() + "::ScanNow()::");
@@ -290,7 +289,7 @@ public class LabOptionMenu extends AppCompatActivity implements View.OnClickList
 
         mDialog.setCancelable(false);
 
-        mDialog.setMessage("Has the sample been received in the laboratory?");
+        mDialog.setMessage("Has the sample been recieved and is currently processing in the laboratory?");
         mDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         scanNow(view);
@@ -400,7 +399,7 @@ public class LabOptionMenu extends AppCompatActivity implements View.OnClickList
 
         mDialog.setCancelable(false);
 
-        mDialog.setMessage("Are you beginning sample elution?");
+        mDialog.setMessage("Has sample elution just begun?");
         mDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
