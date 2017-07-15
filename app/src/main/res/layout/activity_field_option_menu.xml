@@ -1,97 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.autoremoteexample.polio.FieldOptionMenu"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    android:layout_width="match_parent">
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Select your current step."
-        android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp" />
+        tools:context="com.autoremoteexample.polio.FieldOptionMenu"
+        tools:layout_editor_absoluteY="81dp"
+        tools:layout_editor_absoluteX="0dp">
 
-    <Button
-        android:id="@+id/samplePreparationButton"
-        android:layout_width="340dp"
-        android:layout_height="81dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:text="1. BFMS Sample Preparation"
-        android:textAlignment="viewStart"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/startSettlingButton"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Select your current step."
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="16dp" />
 
-    <Button
-        android:id="@+id/startSettlingButton"
-        android:layout_width="340dp"
-        android:layout_height="81dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:text="2. Start of Settling"
-        android:textAlignment="viewStart"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/startFiltrationButton"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <Button
+            android:id="@+id/samplePreparationButton"
+            android:layout_width="340dp"
+            android:layout_height="81dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:text="1. BFMS Sample Preparation"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/startSettlingButton"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-    <Button
-        android:id="@+id/startFiltrationButton"
-        android:layout_width="340dp"
-        android:layout_height="81dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:text="3.Start of Filtration"
-        android:textAlignment="viewStart"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        <Button
+            android:id="@+id/startSettlingButton"
+            android:layout_width="340dp"
+            android:layout_height="81dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:text="2. Start of Settling"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/startFiltrationButton"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-    <Button
-        android:id="@+id/endFiltrationButton"
-        android:layout_width="340dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:text="4. End of Filtration"
-        android:textAlignment="viewStart"
-        android:textSize="17sp"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startFiltrationButton" />
+        <Button
+            android:id="@+id/startFiltrationButton"
+            android:layout_width="340dp"
+            android:layout_height="81dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="3.Start of Filtration"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.498" />
 
-    <Button
-        android:id="@+id/shipButton"
-        android:layout_width="340dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:text="5. Preparation of Shipment to Lab"
-        android:textAlignment="viewStart"
-        android:textSize="17sp"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endFiltrationButton" />
+        <Button
+            android:id="@+id/endFiltrationButton"
+            android:layout_width="340dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="4. End of Filtration"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:textSize="17sp"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startFiltrationButton" />
+
+        <Button
+            android:id="@+id/shipButton"
+            android:layout_width="340dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="5. Preparation of Shipment to Lab"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:textSize="17sp"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/endFiltrationButton" />
+
+        <!-- Added Image Button for Camera function -->
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/field_camera_btn"
+            android:src="@drawable/ic_photo_camera_black_24px"
+            app:layout_constraintTop_toBottomOf="@id/shipButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="8dp" />
 
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
+
+

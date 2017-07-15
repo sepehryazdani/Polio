@@ -24,7 +24,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imageView2"
-        android:text="1. Final Recovered Eluted Volum (mL):"
+        android:text="1. Final Recovered Eluted Volume (mL):"
         android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="40dp"
